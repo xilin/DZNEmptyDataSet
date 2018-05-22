@@ -684,6 +684,14 @@ Class dzn_baseClassToSwizzleForTarget(id target)
 
 
 #pragma mark - UIGestureRecognizerDelegate Methods
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:NSClassFromString(@"TTTAttributedLabel")]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -1029,7 +1037,7 @@ Class dzn_baseClassToSwizzleForTarget(id target)
     UIView *hitView = [super hitTest:point withEvent:event];
 
     // Return any UIControl instance such as buttons, segmented controls, switches, etc.
-    if ([hitView isKindOfClass:[UIControl class]]) {
+    if ([hitView isKindOfClass:[UIControl class]] || [hitView isKindOfClass:NSClassFromString(@"TTTAttributedLabel")]) {
         return hitView;
     }
 
